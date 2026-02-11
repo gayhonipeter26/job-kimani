@@ -626,9 +626,9 @@ onUnmounted(() => {
                     </div>
 
                     <!-- Carousel Navigation -->
-                    <div class="absolute top-1/2 -translate-y-1/2 left-2 md:-left-8 z-20">
+                    <div class="absolute top-1/2 -translate-y-1/2 left-4 md:-left-8 z-20">
                         <button @click="scrollCarousel(-400)"
-                            class="w-10 h-10 md:w-12 md:h-12 bg-white text-brand-dark shadow-xl flex items-center justify-center hover:bg-brand-green hover:text-white transition-all">
+                            class="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm text-brand-dark shadow-xl flex items-center justify-center hover:bg-brand-green hover:text-white transition-all">
                             <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
                                     d="M15 19l-7-7 7-7">
@@ -636,9 +636,9 @@ onUnmounted(() => {
                             </svg>
                         </button>
                     </div>
-                    <div class="absolute top-1/2 -translate-y-1/2 right-2 md:-right-8 z-20">
+                    <div class="absolute top-1/2 -translate-y-1/2 right-4 md:-right-8 z-20">
                         <button @click="scrollCarousel(400)"
-                            class="w-10 h-10 md:w-12 md:h-12 bg-white text-brand-dark shadow-xl flex items-center justify-center hover:bg-brand-green hover:text-white transition-all">
+                            class="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm text-brand-dark shadow-xl flex items-center justify-center hover:bg-brand-green hover:text-white transition-all">
                             <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7">
                                 </path>
