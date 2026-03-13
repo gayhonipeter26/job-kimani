@@ -45,6 +45,10 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error recording volunteer:', error);
-    return res.status(500).json({ message: 'Failed to save data. Please check configuration.' });
+    return res.status(500).json({ 
+      message: 'Failed to save data',
+      error: error.toString() || error.message || 'Unknown error occurred'
+    });
   }
 }
+
