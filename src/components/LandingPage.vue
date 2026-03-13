@@ -399,7 +399,7 @@ const handleVolunteerSubmit = async () => {
                             </h3>
 
                             <p class="text-base md:text-lg text-slate-700 mb-8 md:mb-6 leading-relaxed font-medium">
-                                John Kimani Kang'u isn't just a politician; he's a neighbor, a father, and a lifelong
+                                Job Kimani Kang'u isn't just a politician; he's a neighbor, a father, and a lifelong
                                 advocate for Naivasha
                                   Viwandani.
                                 With a decade of grassroots experience, he bridges the gap between policy and people. He
