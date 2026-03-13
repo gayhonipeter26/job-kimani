@@ -247,7 +247,8 @@ const handleVolunteerSubmit = async () => {
                 volunteerForm.value = { name: '', phone: '', residence: '', role: 'Mobilization & Ground Team' };
             }, 5000);
         } else {
-            window.alert('Error: ' + data.message);
+            const errorMessage = data.error ? `${data.message}\n\nDetails: ${data.error}` : data.message;
+            window.alert('Error: ' + errorMessage);
         }
     } catch (error) {
         window.alert('Failed to connect to the server. Please check your internet.');
