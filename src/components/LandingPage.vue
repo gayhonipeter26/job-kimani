@@ -652,7 +652,7 @@ const handleVolunteerSubmit = async () => {
                     </div>
                 </div>
 
-                <div class="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-24 mb-32 items-center">
+                <div class="flex flex-col lg:grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-24 mb-32 items-center">
                     <!-- Clean Timeline Events List (Hidden on mobile by default) -->
                     <div v-show="showTimeline || true" class="relative pl-8 md:pl-12 lg:block" :class="{'hidden': !showTimeline}">
                         <!-- Vertical Timeline Line -->
