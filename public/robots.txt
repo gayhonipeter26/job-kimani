@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kimani-kang-u.vercel.app/sitemap.xml
+# Sitemap location
+Sitemap: https://www.jobkimani.com/sitemap.xml
