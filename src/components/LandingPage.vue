@@ -597,7 +597,7 @@ const handleVolunteerSubmit = async () => {
                         <span class="text-brand-red">Proven</span> Impact
                     </h2>
                     <p class="text-sm md:text-lg text-gray-600 max-w-2xl mx-auto">Beyond promises, we deliver. Here is
-                        how we have transformed Nakuru
+                        how we have transformed Naivasha
                         Viwandani
                         through dedicated service.</p>
                 </div>
