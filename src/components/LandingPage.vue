@@ -996,7 +996,7 @@ const handleVolunteerSubmit = async () => {
                     <div class="w-10 h-[2px] bg-brand-red mx-auto"></div>
                     <div>
                         <span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 block mb-0.5">Contact Number:</span>
-                        <span class="text-2xl font-black text-brand-red tracking-tighter">0722 000 000</span>
+                        <span class="text-2xl font-black text-brand-red tracking-tighter">0716590035</span>
                         <p class="text-[8px] text-slate-400 mt-1 font-bold uppercase tracking-widest italic">*Direct support line</p>
                     </div>
                 </div>
