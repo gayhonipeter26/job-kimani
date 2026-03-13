@@ -713,11 +713,11 @@ const handleVolunteerSubmit = async () => {
                                 <!-- Poster Images with Transition -->
                                 <div class="relative w-full h-full cursor-pointer" @click="openEventPoster(upcomingEvents[currentPosterIndex])">
                                     <transition-group 
-                                        enter-active-class="transition duration-1000 ease-in-out" 
-                                        enter-from-class="opacity-0 scale-110" 
+                                        enter-active-class="transition duration-700 ease-out" 
+                                        enter-from-class="opacity-0 scale-90" 
                                         enter-to-class="opacity-100 scale-100" 
-                                        leave-active-class="transition duration-1000 ease-in-out absolute inset-0" 
-                                        leave-from-class="opacity-100" 
+                                        leave-active-class="transition duration-700 ease-in absolute inset-0" 
+                                        leave-from-class="opacity-100 scale-100" 
                                         leave-to-class="opacity-0 scale-95">
                                         <div v-for="(event, index) in upcomingEvents" :key="'carousel-'+event.id" 
                                             v-show="index === currentPosterIndex"
