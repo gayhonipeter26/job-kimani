@@ -53,7 +53,7 @@ const pillars = [
         title: 'Health & Sanitation',
         description: 'Upgrading local health dispensaries to ensure every family has access to quality, affordable healthcare.',
         detail: 'Our vision for health includes a 24-hour maternity wing in every major ward dispensary, regular community medical camps, and a subsidized health insurance scheme for the most vulnerable. We will also implement a modern waste collection system to prevent disease outbreaks.',
-        image: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80',
+        image: '/images/health.webp',
         color: 'brand-green'
     },
     {
@@ -61,7 +61,7 @@ const pillars = [
         title: 'Security & Welfare',
         description: 'Enhancing safety through stronger collaboration with security agencies and street lighting.',
         detail: 'We will install solar-powered street lights in all major trading centers and residential alleys. Our welfare program will establish a "Community Care Bureau" to manage monthly stipends for the elderly and provide assistive devices for PWDs.',
-        image: 'https://images.unsplash.com/photo-1473111583946-89fe2dd9d9c2?auto=format&fit=crop&w=800&q=80',
+        image: '/images/security.webp',
         color: 'brand-red'
     },
     {
@@ -69,7 +69,7 @@ const pillars = [
         title: 'Economic Growth',
         description: 'Revitalizing local markets and supporting small businesses (SMEs) with access to credit.',
         detail: 'The Viwandani SME Fund will provide interest-free starter loans for women and youth-led businesses. We will also upgrade our open-air markets with modern sheds, clean water, and secure storage facilities to boost 24-hour trade.',
-        image: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=800&q=80',
+        image: '/images/economic-growth.png',
         color: 'brand-green'
     },
     {
@@ -77,7 +77,7 @@ const pillars = [
         title: 'Sports & Talent',
         description: 'Investing in modern sports facilities and sponsoring local tournaments.',
         detail: 'We will construct high-standard football pitches and basketball courts. The Nakuru Viwandani Talent Academy will provide scholarships for gifted athletes and artists, connecting them to professional scouts and international opportunities.',
-        image: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=800&q=80',
+        image: '/images/sports.jpg',
         color: 'brand-red'
     },
     {
@@ -85,7 +85,7 @@ const pillars = [
         title: 'Youth Empowerment',
         description: 'Establishing innovation hubs and vocational training centers.',
         detail: 'Our Innovation Hubs will provide free high-speed internet and tech training. We will partner with local industries to create a "Direct-to-Employment" apprenticeship program for graduates of our vocational training centers.',
-        image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
+        image: '/images/empower.jpg ',
         color: 'brand-green'
     },
     {
@@ -93,7 +93,7 @@ const pillars = [
         title: 'Education',
         description: 'Modernizing classrooms and increasing bursary allocations.',
         detail: 'We will double the current bursary allocation to ensure 100% transition to secondary and tertiary institutions. Every public primary school will be equipped with a modern computer lab and refurbished sanitary facilities.',
-        image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80',
+        image: '/images/education.jpg',
         color: 'brand-red'
     },
     {
@@ -101,7 +101,7 @@ const pillars = [
         title: 'Infrastructure',
         description: 'Aggressive upgrading of road networks and drainage systems.',
         detail: 'Prioritizing the paving of all major feeder roads with high-quality cabro and asphalt. We will also implement a comprehensive drainage master plan to end the perennial flooding during rainy seasons.',
-        image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80',
+        image: '/images/infrastructure.webp',
         color: 'brand-green'
     },
     {
@@ -109,7 +109,7 @@ const pillars = [
         title: 'Environment',
         description: 'Promoting sustainable waste management and green spaces.',
         detail: 'Our "Green Viwandani" project will plant 100,000 trees across the ward. We will establish a community-led recycling plant that turns organic waste into fertilizer, providing jobs while keeping our environment pristine.',
-        image: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80',
+        image: '/images/environment.jpg',
         color: 'brand-red'
     }
 ];
@@ -131,15 +131,130 @@ const closePillarDetail = () => {
     selectedPillar.value = null;
 };
 
+const handleKeyDown = (e) => {
+    if (eventModalOpen.value) {
+        if (e.key === 'ArrowRight') navigateModal(1);
+        if (e.key === 'ArrowLeft') navigateModal(-1);
+        if (e.key === 'Escape') eventModalOpen.value = false;
+    }
+};
+
 onMounted(() => {
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('keydown', handleKeyDown);
     startCarousel();
 });
 
 onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('keydown', handleKeyDown);
     stopCarousel();
+    if (posterInterval) clearInterval(posterInterval);
 });
+
+const currentPosterIndex = ref(0);
+let posterInterval = null;
+
+onMounted(() => {
+    posterInterval = setInterval(() => {
+        currentPosterIndex.value = (currentPosterIndex.value + 1) % upcomingEvents.value.length;
+    }, 5000); // Change every 5 seconds
+});
+
+const upcomingEvents = ref([
+    {
+        id: 1,
+        title: "Official Voter Registration",
+        type: "Civic Duty",
+        date: "Ongoing",
+        time: "8:00 AM - 5:00 PM",
+        location: "All Polling Stations",
+        poster: "/images/poster-voter-reg.jpg",
+        description: "Your vote is your voice. Register now at your nearest polling station to ensure you are ready for 2027."
+    },
+    {
+        id: 2,
+        title: "Introducing Job Kang'u",
+        type: "Campaign Launch",
+        date: "Official Portrait",
+        time: "All Day",
+        location: "Naivasha Viwandani",
+        poster: "/images/poster-job-kang.jpg",
+        description: "Changing the conversation for Naivasha Viwandani. Meet your MCA candidate for 2027."
+    },
+    {
+        id: 3,
+        title: "The 2027 Manifesto",
+        type: "Strategic Vision",
+        date: "Available Now",
+        time: "Digital Access",
+        location: "Naivasha Constituency",
+        poster: "/images/poster-manifesto.jpg",
+        description: "Health, Security, Education, and Youth Empowerment. Explore the pillars of our progress."
+    }
+]);
+
+const eventModalOpen = ref(false);
+const selectedEvent = ref(null);
+const showTimeline = ref(false); // Initially false for mobile priority
+
+const openEventPoster = (event) => {
+    selectedEvent.value = event;
+    eventModalOpen.value = true;
+};
+
+const navigateModal = (direction) => {
+    if (!selectedEvent.value) return;
+    const currentIndex = upcomingEvents.value.findIndex(e => e.id === selectedEvent.value.id);
+    let nextIndex = currentIndex + direction;
+    if (nextIndex >= upcomingEvents.value.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = upcomingEvents.value.length - 1;
+    selectedEvent.value = upcomingEvents.value[nextIndex];
+};
+
+// --- Integration State ---
+const volunteerForm = ref({
+    name: '',
+    phone: '',
+    residence: '',
+    role: 'Mobilization & Ground Team'
+});
+
+const isSignedUp = ref(false);
+
+const isProcessing = ref({
+    volunteer: false,
+    donation: false
+});
+
+// --- Integration Logic ---
+const handleVolunteerSubmit = async () => {
+    isProcessing.value.volunteer = true;
+    try {
+        const response = await fetch('/api/volunteer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(volunteerForm.value)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            isSignedUp.value = true;
+            setTimeout(() => {
+                volunteerModalOpen.value = false;
+                isSignedUp.value = false;
+                volunteerForm.value = { name: '', phone: '', residence: '', role: 'Mobilization & Ground Team' };
+            }, 5000);
+        } else {
+            window.alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        window.alert('Failed to connect to the server. Please check your internet.');
+    } finally {
+        isProcessing.value.volunteer = false;
+    }
+};
 </script>
 
 <template>
@@ -174,8 +289,8 @@ onUnmounted(() => {
                                 </div>
                                 <span
                                     class="hidden sm:block text-[0.45rem] md:text-[0.5rem] font-bold tracking-widest text-brand-red uppercase">Integrity
-                                    •
-                                    Service •
+                                    -
+                                    Service -
                                     Progress</span>
                             </div>
                         </a>
@@ -186,6 +301,7 @@ onUnmounted(() => {
                         <a href="#vision" class="hover:text-brand-red transition-colors">Vision</a>
                         <a href="#agenda" class="hover:text-brand-red transition-colors">Agenda</a>
                         <a href="#impact" class="hover:text-brand-red transition-colors">Impact</a>
+                        <a href="#activities" class="hover:text-brand-red transition-colors">Events</a>
                         <a href="#join"
                             class="bg-brand-red text-white px-6 py-2.5 rounded-none hover:bg-brand-dark transition-colors shadow-lg hover:shadow-xl">Get
                             Involved</a>
@@ -218,6 +334,8 @@ onUnmounted(() => {
                             class="text-xl font-bold text-brand-dark hover:text-brand-red transition-colors">Agenda</a>
                         <a href="#impact" @click="isMobileMenuOpen = false"
                             class="text-xl font-bold text-brand-dark hover:text-brand-red transition-colors">Impact</a>
+                        <a href="#activities" @click="isMobileMenuOpen = false"
+                            class="text-xl font-bold text-brand-dark hover:text-brand-red transition-colors">Events</a>
                         <a href="#join" @click="isMobileMenuOpen = false" class="text-xl font-black text-brand-red">Get
                             Involved</a>
                     </div>
@@ -227,7 +345,7 @@ onUnmounted(() => {
 
         <!-- Hero Section -->
         <header
-            class="relative min-h-[40vh] md:min-h-[65vh] flex flex-col items-center justify-center bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed text-white pt-10 md:pt-20 pb-4 md:pb-0 perspective-1">
+            class="relative min-h-[35vh] md:min-h-[50vh] flex flex-col items-center justify-center bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed text-white pt-10 md:pt-20 pb-4 md:pb-0 perspective-1">
             <div class="absolute inset-0 bg-black/65"></div>
 
             <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 text-center">
@@ -243,26 +361,26 @@ onUnmounted(() => {
             </div>
         </header>
 
-        <!-- Vision / About Section (Blended Overlap) -->
-        <section id="vision" class="relative z-20 -mt-20 md:-mt-32 pb-6 md:pb-24 scroll-mt-24">
-            <div class="max-w-7xl mx-auto px-6">
+        <!-- Vision / About Section (Optimized for Mobile) -->
+        <section id="vision" class="relative z-20 -mt-12 md:-mt-32 pb-4 md:pb-12 scroll-mt-24">
+            <div class="max-w-7xl mx-auto px-4 md:px-6">
                 <!-- Glass Card -->
                 <div
-                    class="bg-white/70 backdrop-blur-xl shadow-2xl rounded-none border-t-8 border-brand-green overflow-hidden ring-1 ring-white/20">
-                    <div class="grid md:grid-cols-2 gap-0">
+                    class="bg-white/80 backdrop-blur-2xl shadow-2xl rounded-none border-t-8 border-brand-green overflow-hidden ring-1 ring-white/30">
+                    <div class="grid md:grid-cols-2">
 
                         <!-- Image Side -->
-                        <div class="relative min-h-[350px] md:min-h-[650px] overflow-hidden group">
-                            <img src="/images/Gemini_Generated_Image_j00gmgj00gmgj00g.png" alt="Job Kimani Kang'u"
+                        <div class="relative aspect-square md:aspect-auto md:min-h-[650px] overflow-hidden group">
+                            <img src="/images/job-kimani.png" alt="Job Kimani Kang'u"
                                 class="absolute inset-0 w-full h-full object-cover object-top transition duration-700 group-hover:scale-110">
                             <!-- Premium Gradient Overlay -->
                             <div
-                                class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent">
+                                class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent">
                             </div>
-                            <div class="absolute bottom-0 left-0 p-8 md:p-12 text-white z-20">
-                                <div class="w-16 md:w-20 h-2 bg-brand-red mb-4 md:mb-6"></div>
+                            <div class="absolute bottom-0 left-0 p-6 md:p-12 text-white z-20">
+                                <div class="w-12 md:w-20 h-2 bg-brand-red mb-4 md:mb-6"></div>
                                 <p
-                                    class="text-2xl md:text-3xl font-serif italic text-white drop-shadow-md leading-relaxed">
+                                    class="text-xl md:text-3xl font-serif italic text-white drop-shadow-md leading-relaxed">
                                     "Service
                                     is not a
                                     position, it is an action. We rise by lifting others."</p>
@@ -270,20 +388,19 @@ onUnmounted(() => {
                         </div>
 
                         <!-- Content Side -->
-                        <div class="p-6 md:p-12 lg:p-24 flex flex-col justify-center bg-white/60 md:bg-white/40">
+                        <div class="p-6 md:p-12 lg:p-24 flex flex-col justify-center bg-white/40">
                             <span
-                                class="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-brand-red text-white rounded-none text-xs md:text-sm font-bold tracking-widest uppercase mb-4 md:mb-8 self-start shadow-md">Job
-                                Kimani Kang'u</span>
+                                class="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-brand-red text-white rounded-none text-[10px] md:text-sm font-black tracking-[0.2em] uppercase mb-6 md:mb-8 self-start shadow-xl">The Candidate</span>
 
                             <h3
-                                class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-brand-dark mb-4 md:mb-8 leading-[1.1] drop-shadow-sm">
+                                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-brand-dark mb-6 md:mb-8 leading-[1.1] uppercase italic tracking-tighter">
                                 A Proven Leader <br> <span class="text-brand-green">Rooted in Community</span>
                             </h3>
 
-                            <p class="text-sm md:text-lg text-gray-700 mb-4 md:mb-6 leading-relaxed font-medium">
+                            <p class="text-base md:text-lg text-slate-700 mb-8 md:mb-6 leading-relaxed font-medium">
                                 John Kimani Kang'u isn't just a politician; he's a neighbor, a father, and a lifelong
-                                advocate for Nakuru
-                                Viwandani.
+                                advocate for Naivasha
+                                  Viwandani.
                                 With a decade of grassroots experience, he bridges the gap between policy and people. He
                                 understands that
                                 <span class="font-black text-brand-dark">true leadership</span> is about listening,
@@ -291,24 +408,24 @@ onUnmounted(() => {
                                 acting.
                             </p>
 
-                            <div class="grid grid-cols-2 gap-6 md:gap-10 border-t-2 border-brand-dark/10 pt-8 md:pt-10">
+                            <div class="grid grid-cols-2 gap-4 md:gap-10 border-t-2 border-brand-dark/10 pt-8 md:pt-10">
                                 <div>
                                     <div
-                                        class="text-4xl md:text-5xl font-black text-brand-red mb-1 md:mb-2 drop-shadow-sm">
+                                        class="text-3xl md:text-5xl font-black text-brand-red mb-1 md:mb-2 italic">
                                         15+</div>
                                     <div
-                                        class="text-[0.65rem] md:text-sm text-brand-dark font-bold uppercase tracking-widest">
+                                        class="text-[10px] md:text-sm text-brand-dark font-black uppercase tracking-widest">
                                         Years
                                         Experience</div>
                                 </div>
                                 <div>
                                     <div
-                                        class="text-4xl md:text-5xl font-black text-brand-green mb-1 md:mb-2 drop-shadow-sm">
+                                        class="text-3xl md:text-5xl font-black text-brand-green mb-1 md:mb-2 italic">
                                         12</div>
                                     <div
-                                        class="text-[0.65rem] md:text-sm text-brand-dark font-bold uppercase tracking-widest">
+                                        class="text-[10px] md:text-sm text-brand-dark font-black uppercase tracking-widest">
                                         Wards
-                                        Represented</div>
+                                        Impacted</div>
                                 </div>
                             </div>
                         </div>
@@ -320,9 +437,9 @@ onUnmounted(() => {
 
         <!-- Manifesto / Agenda Section -->
         <section id="agenda"
-            class="py-24 bg-gradient-to-br from-brand-green/10 via-white to-brand-red/10 border-y border-brand-green/10 scroll-mt-24">
+            class="py-12 md:py-16 bg-gradient-to-br from-brand-green/10 via-white to-brand-red/10 border-y border-brand-green/10 scroll-mt-24">
             <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="text-center max-w-3xl mx-auto mb-12">
                     <span
                         class="inline-block px-3 py-1 bg-brand-red text-white rounded-none text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">Our
                         Manifesto</span>
@@ -415,12 +532,12 @@ onUnmounted(() => {
                     enter-to-class="opacity-100 scale-100" leave-active-class="transition duration-300 ease-in"
                     leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-95">
                     <div v-if="selectedPillar"
-                        class="fixed inset-0 z-[70] flex items-center justify-center bg-brand-dark/40 backdrop-blur-xl p-4 md:p-8">
+                        class="fixed inset-0 z-[70] flex items-center justify-center bg-brand-dark/40 backdrop-blur-md p-4 md:p-8" @click.self="selectedPillar = null">
                         <div
-                            class="relative w-full max-w-3xl md:max-w-4xl bg-white/95 backdrop-blur-lg shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] overflow-y-auto">
+                            class="relative w-full max-w-3xl md:max-w-4xl bg-white/70 backdrop-blur-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] overflow-y-auto ring-1 ring-white/30">
                             <!-- Close Button -->
                             <button @click="closePillarDetail"
-                                class="absolute top-4 right-4 z-50 w-10 h-10 bg-brand-dark text-white flex items-center justify-center hover:bg-brand-red transition-colors shadow-lg">
+                                class="absolute top-4 right-4 z-50 w-10 h-10 bg-brand-dark/80 backdrop-blur-sm text-white flex items-center justify-center hover:bg-brand-red transition-colors shadow-lg">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                         d="M6 18L18 6M6 6l12 12"></path>
@@ -440,7 +557,7 @@ onUnmounted(() => {
                             </div>
 
                             <!-- Content Side -->
-                            <div class="w-full md:w-7/12 p-6 md:p-10 lg:p-12 bg-white flex flex-col justify-center">
+                            <div class="w-full md:w-7/12 p-6 md:p-10 lg:p-12 bg-transparent flex flex-col justify-center">
                                 <div
                                     :class="['w-12 md:w-16 h-1 mb-4 md:mb-6', selectedPillar.color === 'brand-red' ? 'bg-brand-red' : 'bg-brand-green']">
                                 </div>
@@ -471,9 +588,9 @@ onUnmounted(() => {
         </section>
 
         <!-- Impact Section -->
-        <section id="impact" class="py-12 md:py-24 bg-white scroll-mt-24">
+        <section id="impact" class="py-8 md:py-16 bg-white scroll-mt-24">
             <div class="max-w-7xl mx-auto px-4 md:px-6">
-                <div class="text-center max-w-3xl mx-auto mb-10 md:mb-16">
+                <div class="text-center max-w-3xl mx-auto mb-8 md:mb-12">
                     <h2
                         class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase italic mb-3 md:mb-4 tracking-tight text-brand-dark">
                         <span class="text-brand-red">Proven</span> Impact
@@ -511,12 +628,172 @@ onUnmounted(() => {
             </div>
         </section>
 
+        <!-- Activity Hub Section -->
+        <section id="activities" class="py-12 lg:py-16 bg-white relative overflow-hidden scroll-mt-24">
+            <!-- Background Decoration - Subtler for white bg -->
+            <div class="absolute top-0 right-0 w-1/3 h-full bg-slate-50 skew-x-12 translate-x-1/2"></div>
+            
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+                    <div class="max-w-2xl px-4 md:px-0 text-center md:text-left">
+                        <span class="inline-block px-3 py-1 bg-brand-green text-white text-[10px] font-black uppercase tracking-widest mb-4">Stay Connected</span>
+                        <h2 class="text-4xl md:text-6xl font-black text-brand-dark uppercase italic leading-none">Upcoming <span class="text-brand-red">Activities</span></h2>
+                        <p class="text-slate-600 mt-6 text-lg">Mark your calendars. Join Job Kimani at these upcoming community engagements and planning sessions.</p>
+                    </div>
+                    <!-- Mobile Subtle Toggle -->
+                    <div class="lg:hidden mt-8">
+                        <button @click="showTimeline = !showTimeline" 
+                            class="text-brand-dark/40 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:text-brand-red transition-colors mx-auto">
+                            <span v-if="!showTimeline">View Calendar Schedule</span>
+                            <span v-else>Hide Calendar Schedule</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" v-if="!showTimeline"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-24 mb-32 items-center">
+                    <!-- Clean Timeline Events List (Hidden on mobile by default) -->
+                    <div v-show="showTimeline || true" class="relative pl-8 md:pl-12 lg:block" :class="{'hidden': !showTimeline}">
+                        <!-- Vertical Timeline Line -->
+                        <div class="absolute left-0 md:left-4 top-2 bottom-0 w-0.5 bg-slate-200"></div>
+
+                        <div class="space-y-12">
+                            <div v-for="event in upcomingEvents" :key="event.id" 
+                                class="relative group">
+                                <!-- Individual Blur Overlay - ALWAYS ACTIVE -->
+                                <div class="absolute inset-0 z-20 flex items-center justify-center p-4">
+                                    <div class="bg-white/70 backdrop-blur-md px-4 py-2 border border-brand-red/20 shadow-xl">
+                                        <span class="text-brand-red font-black text-[10px] md:text-sm uppercase italic tracking-tighter animate-pulse">
+                                            To Be Uploaded Soon
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline Marker Dot -->
+                                <div class="absolute -left-[35px] md:-left-[39px] top-2 w-4 h-4 rounded-full bg-white border-4 border-brand-red shadow-sm z-10"></div>
+                                
+                                <div class="bg-slate-50/50 p-6 md:p-10 border border-slate-100 rounded-sm blur-2xl grayscale opacity-30 select-none pointer-events-none transition-all duration-700">
+                                    <div class="flex flex-col gap-4">
+                                        <div class="flex items-center justify-between flex-wrap gap-4">
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-brand-green text-[10px] font-black uppercase tracking-widest">{{ event.type }}</span>
+                                                <div class="w-8 h-[1px] bg-slate-200"></div>
+                                                <span class="text-brand-red font-black text-xs">{{ event.date }}</span>
+                                            </div>
+                                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-tighter bg-white px-2 py-1 shadow-sm">{{ event.time }}</span>
+                                        </div>
+                                        
+                                        <h4 class="text-2xl md:text-3xl font-black text-brand-dark mb-2 italic uppercase leading-tight">{{ event.title }}</h4>
+                                        <p class="text-slate-600 text-sm leading-relaxed mb-6">{{ event.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="lg:sticky lg:top-32">
+                            <div class="mb-6 lg:mb-8">
+                                <span class="text-brand-red text-[10px] lg:text-xs font-black uppercase tracking-[0.3em] block mb-2">Campaign Spotlight</span>
+                                <h3 class="text-2xl lg:text-3xl font-black text-brand-dark uppercase italic leading-none">Visual <span class="text-brand-green">Gallery</span></h3>
+                            </div>
+                            
+                            <div class="relative aspect-square lg:aspect-[4/5] bg-slate-900 overflow-hidden shadow-2xl border border-slate-800 group">
+                                <!-- In-Card Navigation Overlay -->
+                                <div class="absolute inset-x-0 bottom-0 z-30 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                                    <!-- Carousel Indicators -->
+                                    <div class="flex gap-2">
+                                        <div v-for="(_, i) in upcomingEvents" :key="'dot-'+i" 
+                                            :class="['w-2 h-2 rounded-full transition-all duration-500', i === currentPosterIndex ? 'bg-brand-red w-6' : 'bg-white/40']">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Poster Images with Transition -->
+                                <div class="relative w-full h-full cursor-pointer" @click="openEventPoster(upcomingEvents[currentPosterIndex])">
+                                    <transition-group 
+                                        enter-active-class="transition duration-1000 ease-in-out" 
+                                        enter-from-class="opacity-0 scale-110" 
+                                        enter-to-class="opacity-100 scale-100" 
+                                        leave-active-class="transition duration-1000 ease-in-out absolute inset-0" 
+                                        leave-from-class="opacity-100" 
+                                        leave-to-class="opacity-0 scale-95">
+                                        <div v-for="(event, index) in upcomingEvents" :key="'carousel-'+event.id" 
+                                            v-show="index === currentPosterIndex"
+                                            class="absolute inset-0 w-full h-full">
+                                            <img :src="event.poster" :alt="event.title" class="w-full h-full object-contain transition-opacity duration-700">
+                                            <!-- Subtler Gradient for containment -->
+                                            <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                                            <div class="absolute bottom-12 left-8 right-8 text-white">
+                                                <span class="text-brand-red text-xs font-black uppercase tracking-widest block mb-2 drop-shadow-sm">{{ event.type }}</span>
+                                                <h3 class="text-2xl font-black uppercase italic drop-shadow-md">{{ event.title }}</h3>
+                                            </div>
+                                        </div>
+                                    </transition-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Poster Modal -->
+        <transition enter-active-class="transition duration-500 ease-out" enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100" leave-active-class="transition duration-300 ease-in"
+            leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-95">
+            <div v-if="eventModalOpen && selectedEvent"
+                class="fixed inset-0 z-[100] flex items-center justify-center bg-brand-dark/60 backdrop-blur-md p-4 lg:p-12" @click.self="eventModalOpen = false">
+                
+                <!-- Screen-Edge Navigation Arrows -->
+                <button @click="navigateModal(-1)" 
+                    class="fixed left-4 lg:left-12 top-1/2 -translate-y-1/2 z-[110] w-12 h-12 rounded-full bg-brand-dark/10 backdrop-blur-xl border border-brand-dark/10 text-brand-dark flex items-center justify-center hover:bg-brand-red hover:border-brand-red hover:text-white transition-all duration-300 shadow-xl active:scale-90">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                
+                <button @click="navigateModal(1)" 
+                    class="fixed right-4 lg:right-12 top-1/2 -translate-y-1/2 z-[110] w-12 h-12 rounded-full bg-brand-dark/10 backdrop-blur-xl border border-brand-dark/10 text-brand-dark flex items-center justify-center hover:bg-brand-red hover:border-brand-red hover:text-white transition-all duration-300 shadow-xl active:scale-90">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+
+                <div class="relative max-w-[92%] md:max-w-xl lg:max-w-3xl w-full bg-white/90 backdrop-blur-2xl shadow-[0_0_100px_rgba(0,0,0,0.2)] overflow-hidden ring-1 ring-white/30 animate-scale-up">
+                    <button @click="eventModalOpen = false" class="absolute top-3 right-3 z-50 w-9 h-9 bg-brand-dark/80 backdrop-blur-sm text-white flex items-center justify-center hover:bg-brand-red transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                    <div class="relative w-full bg-slate-50 flex items-center justify-center">
+                        <img :src="selectedEvent.poster" :alt="selectedEvent.title" class="max-w-full max-h-[40vh] md:max-h-[70vh] object-contain shadow-lg">
+                    </div>
+                    <div class="p-5 lg:p-8 bg-transparent">
+                        <div class="flex items-center gap-4 mb-3 lg:mb-4">
+                            <div class="px-2 py-0.5 lg:px-3 lg:py-1 bg-brand-red text-white text-[9px] lg:text-[10px] font-black uppercase tracking-widest">Campaign Poster</div>
+                            <span class="text-slate-400 text-[10px] lg:text-xs font-bold">{{ selectedEvent.date }} - {{ selectedEvent.time }}</span>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-black text-brand-dark uppercase italic mb-2 lg:mb-4">{{ selectedEvent.title }}</h3>
+                        <p class="text-slate-600 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6">{{ selectedEvent.description }}</p>
+                        <div class="flex items-center gap-2 text-brand-green font-bold text-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            {{ selectedEvent.location }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
         <!-- Action Center -->
-        <section id="join" class="py-12 md:py-24 pb-32 md:pb-48 bg-brand-light scroll-mt-24">
+        <section id="join" class="py-8 md:py-16 pb-24 md:pb-32 bg-brand-light scroll-mt-24">
             <div class="max-w-7xl mx-auto px-4 md:px-6">
-                <div class="text-center mb-10 md:mb-16">
+                <div class="text-center mb-8 md:mb-12">
                     <h2
-                        class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase italic mb-3 md:mb-4 tracking-tight text-brand-dark">
+                        class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase italic mb-2 md:mb-3 tracking-tight text-brand-dark">
                         <span class="text-brand-red">Get</span> Involved
                     </h2>
                     <p class="text-sm md:text-lg text-gray-600 max-w-2xl mx-auto mb-8 md:mb-12">
@@ -556,8 +833,8 @@ onUnmounted(() => {
 
                         <!-- Step 1 -->
                         <div class="flex-none w-full snap-center">
-                            <div class="relative h-[350px] md:h-[450px] overflow-hidden shadow-2xl bg-brand-dark">
-                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
+                            <div class="relative h-[280px] md:h-[350px] overflow-hidden shadow-2xl bg-brand-dark">
+                                <img src="/images/verify.png"
                                     class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
                                     alt="Verify Status">
                                 <div
@@ -579,8 +856,8 @@ onUnmounted(() => {
 
                         <!-- Step 2 -->
                         <div class="flex-none w-full snap-center">
-                            <div class="relative h-[350px] md:h-[450px] overflow-hidden shadow-2xl bg-brand-dark">
-                                <img src="https://images.unsplash.com/photo-1547448415-e9f5b28e570d?auto=format&fit=crop&w=800&q=80"
+                            <div class="relative h-[280px] md:h-[350px] overflow-hidden shadow-2xl bg-brand-dark">
+                                <img src="/images/locate.png"
                                     class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
                                     alt="Locate Center">
                                 <div
@@ -602,10 +879,10 @@ onUnmounted(() => {
 
                         <!-- Step 3 -->
                         <div class="flex-none w-full snap-center">
-                            <div class="relative h-[350px] md:h-[450px] overflow-hidden shadow-2xl bg-brand-dark">
-                                <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=800&q=80"
+                            <div class="relative h-[280px] md:h-[350px] overflow-hidden shadow-2xl bg-brand-dark">
+                                <img src="/images/bring.png"  
                                     class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
-                                    alt="Documentation">
+                                    alt="Bring ID">
                                 <div
                                     class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent">
                                 </div>
@@ -625,8 +902,8 @@ onUnmounted(() => {
 
                         <!-- Step 4 -->
                         <div class="flex-none w-full snap-center">
-                            <div class="relative h-[350px] md:h-[450px] overflow-hidden shadow-2xl bg-brand-dark">
-                                <img src="https://images.unsplash.com/photo-1526666361175-e3595627c376?auto=format&fit=crop&w=800&q=80"
+                            <div class="relative h-[280px] md:h-[350px] overflow-hidden shadow-2xl bg-brand-dark">
+                                <img src="/images/confirm.png"
                                     class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
                                     alt="Success">
                                 <div
@@ -653,8 +930,8 @@ onUnmounted(() => {
                         class="relative md:absolute bottom-0 left-0 right-0 z-30 px-4 md:px-12 mt-8 md:mt-0 md:translate-y-1/2">
                         <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-7xl mx-auto">
                             <!-- Volunteer Card -->
-                            <div
-                                class="bg-white p-8 md:p-10 lg:p-12 shadow-2xl border-t-8 border-brand-red hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 group/card flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
+                            <div id="volunteer-card"
+                                class="scroll-mt-32 bg-white p-8 md:p-10 lg:p-12 shadow-2xl border-t-8 border-brand-red hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 group/card flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
                                 <div class="text-left">
                                     <h4
                                         class="text-xl md:text-2xl lg:text-3xl font-black text-brand-dark uppercase italic leading-tight mb-1 md:mb-2">
@@ -670,9 +947,8 @@ onUnmounted(() => {
                             </div>
 
                             <!-- Donate Card -->
-                            <div
-                                class="bg-brand-red p-8 md:p-10 lg:p-12 shadow-2xl border-t-8 border-white hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 group/card flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
-                                <div class="text-left">
+                            <div id="donate-card"
+                                class="scroll-mt-32 bg-brand-red p-8 md:p-10 lg:p-12 shadow-2xl border-t-8 border-white hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 group/card flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">                                <div class="text-left">
                                     <h4
                                         class="text-xl md:text-2xl lg:text-3xl font-black text-white uppercase italic leading-tight mb-1 md:mb-2">
                                         Fuel the Mission
@@ -694,98 +970,126 @@ onUnmounted(() => {
 
         <!-- Donation Modal -->
         <div v-if="donationModalOpen"
-            class="fixed inset-0 z-[80] flex items-center justify-center bg-brand-dark/80 backdrop-blur-md p-4">
-            <div
-                class="bg-white rounded-none max-w-md w-full p-6 md:p-8 shadow-2xl animate-fade-in-up border-t-8 border-brand-red">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold text-gray-900">Donate via M-Pesa</h3>
-                    <button @click="donationModalOpen = false" class="text-gray-400 hover:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12">
-                            </path>
+            class="fixed inset-0 z-[80] flex items-center justify-center bg-brand-dark/60 backdrop-blur-md p-4" @click.self="donationModalOpen = false">
+            <div class="bg-white/90 backdrop-blur-2xl rounded-none max-w-md w-full p-6 md:p-8 shadow-2xl animate-fade-in-up border-t-8 border-brand-red ring-1 ring-white/30 text-center relative">
+                <button @click="donationModalOpen = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+
+                <div class="mb-6">
+                    <div class="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
                         </svg>
-                    </button>
+                    </div>
+                    <h3 class="text-2xl font-black text-brand-dark uppercase italic mb-1">Support the Movement</h3>
+                    <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Donation Details</p>
                 </div>
 
-                <form class="space-y-4"
-                    @submit.prevent="window.alert('M-Pesa prompt sent!'); donationModalOpen = false;">
+                <div class="bg-slate-50 p-6 border border-slate-100 mb-6 space-y-3">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                        <input type="tel" placeholder="0712 345 678"
-                            class="w-full px-4 py-3 rounded-none border border-gray-300 focus:ring-2 focus:ring-brand-red focus:border-brand-red bg-gray-50">
+                        <span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 block mb-0.5">Send To:</span>
+                        <span class="text-xl font-black text-brand-dark uppercase italic">Job Kimani Kang'u</span>
                     </div>
+                    <div class="w-10 h-[2px] bg-brand-red mx-auto"></div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-                        <div class="grid grid-cols-3 gap-3 mb-3">
-                            <button type="button"
-                                class="py-2 border border-gray-300 rounded-none hover:border-brand-red hover:text-brand-red transition">500</button>
-                            <button type="button"
-                                class="py-2 border border-gray-300 rounded-none hover:border-brand-red hover:text-brand-red transition">1000</button>
-                            <button type="button"
-                                class="py-2 border border-brand-red bg-red-50 text-brand-red rounded-none font-bold">5000</button>
-                        </div>
-                        <input type="number" placeholder="Enter custom amount"
-                            class="w-full px-4 py-3 rounded-none border border-gray-300 focus:ring-2 focus:ring-brand-red focus:border-brand-red bg-gray-50">
+                        <span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 block mb-0.5">Contact Number:</span>
+                        <span class="text-2xl font-black text-brand-red tracking-tighter">0722 000 000</span>
+                        <p class="text-[8px] text-slate-400 mt-1 font-bold uppercase tracking-widest italic">*Direct support line</p>
                     </div>
-                    <button type="submit"
-                        class="w-full bg-brand-red text-white font-bold py-4 rounded-none hover:bg-red-800 transition shadow-lg">
-                        Send Request
-                    </button>
-                </form>
-                <p class="text-center text-xs text-gray-400 mt-4">Transactions are secure and transparent.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <p class="text-slate-600 leading-relaxed italic font-medium text-xs">
+                        'Your contribution, no matter the size, fuels our vision for a transparent and empowered Naivasha Viwandani.'
+                    </p>
+                    <div class="flex items-center justify-center gap-3 pt-3 border-t border-slate-100">
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Official Contribution Channel</span>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Volunteer Modal -->
         <div v-if="volunteerModalOpen"
-            class="fixed inset-0 z-[80] flex items-center justify-center bg-brand-dark/80 backdrop-blur-md p-4">
+            class="fixed inset-0 z-[80] flex items-center justify-center bg-brand-dark/60 backdrop-blur-md p-4" @click.self="volunteerModalOpen = false">
             <div
-                class="bg-white rounded-none max-w-md w-full p-6 md:p-8 shadow-2xl animate-fade-in-up border-t-8 border-brand-green">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold text-gray-900">Join the Team</h3>
-                    <button @click="volunteerModalOpen = false" class="text-gray-400 hover:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12">
-                            </path>
-                        </svg>
-                    </button>
+                class="bg-white/90 backdrop-blur-2xl rounded-none max-w-md w-full p-6 md:p-8 shadow-2xl animate-fade-in-up border-t-8 border-brand-green ring-1 ring-white/30 text-center relative">
+                
+                <div v-if="!isSignedUp">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="text-left">
+                            <h3 class="text-2xl font-black text-brand-dark uppercase italic leading-none mb-1.5">Join the <span class="text-brand-green">Team</span></h3>
+                            <p class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">Official Volunteer Enrollment</p>
+                        </div>
+                        <button @click="volunteerModalOpen = false" class="absolute top-4 right-4 text-gray-400 hover:text-brand-red transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form class="space-y-4 text-left" @submit.prevent="handleVolunteerSubmit">
+                        <div class="space-y-1">
+                            <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Full Name</label>
+                            <input type="text" v-model="volunteerForm.name" placeholder="YOUR NAME" required
+                                class="w-full px-4 py-3 rounded-none border-b-2 border-slate-100 focus:border-brand-green bg-slate-50 transition-all font-bold text-brand-dark text-sm placeholder:opacity-30">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Phone Number</label>
+                            <input type="tel" v-model="volunteerForm.phone" placeholder="07XX XXX XXX (10 Digits)" required
+                                pattern="^[0-9]{10}$" minlength="10" maxlength="10"
+                                class="w-full px-4 py-3 rounded-none border-b-2 border-slate-100 focus:border-brand-green bg-slate-50 transition-all font-bold text-brand-dark text-sm placeholder:opacity-30">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Residence / Ward</label>
+                            <input type="text" v-model="volunteerForm.residence" placeholder="e.g. LAKE VIEW WARD" required
+                                class="w-full px-4 py-3 rounded-none border-b-2 border-slate-100 focus:border-brand-green bg-slate-50 transition-all font-bold text-brand-dark text-sm placeholder:opacity-30">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Strategic Area</label>
+                            <select v-model="volunteerForm.role"
+                                class="w-full px-4 py-3 rounded-none border-b-2 border-slate-100 focus:border-brand-green bg-slate-50 transition-all font-bold text-brand-dark text-sm appearance-none cursor-pointer">
+                                <option>Mobilization & Ground Team</option>
+                                <option>Event Organizing</option>
+                                <option>Social Media</option>
+                                <option>Professional Skills (Legal, Media, etc.)</option>
+                            </select>
+                        </div>
+                        <button type="submit" :disabled="isProcessing.volunteer"
+                            class="w-full bg-brand-green text-white font-black py-4 rounded-none hover:bg-brand-dark transition-all shadow-xl disabled:opacity-50 uppercase tracking-[0.2em] text-xs mt-2">
+                            {{ isProcessing.volunteer ? 'ENROLLING...' : 'CONFIRM ENROLLMENT' }}
+                        </button>
+                    </form>
                 </div>
 
-                <form class="space-y-4"
-                    @submit.prevent="window.alert('We will contact you shortly!'); volunteerModalOpen = false;">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <input type="text" placeholder="John Doe"
-                            class="w-full px-4 py-3 rounded-none border border-gray-300 focus:ring-2 focus:ring-brand-green focus:border-brand-green bg-gray-50">
+                <div v-else class="py-6 animate-fade-in">
+                    <div class="w-14 h-14 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                        </svg>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                        <input type="tel" placeholder="0712 345 678"
-                            class="w-full px-4 py-3 rounded-none border border-gray-300 focus:ring-2 focus:ring-brand-green focus:border-brand-green bg-gray-50">
+                    <h3 class="text-2xl font-black text-brand-dark uppercase italic mb-3">You're on the Team!</h3>
+                    <div class="space-y-3 max-w-[280px] mx-auto">
+                        <p class="text-slate-600 font-medium italic text-sm">
+                            "Thank you for stepping up, <span class="text-brand-green font-black underline">{{ volunteerForm.name }}</span>."
+                        </p>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+                            Our team will reach out to <span class="text-brand-dark">{{ volunteerForm.phone }}</span> shortly.
+                        </p>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">How can you help?</label>
-                        <select
-                            class="w-full px-4 py-3 rounded-none border border-gray-300 focus:ring-2 focus:ring-brand-green focus:border-brand-green bg-gray-50">
-                            <option>Mobilization & Ground Team</option>
-                            <option>Event Organizing</option>
-                            <option>Social Media</option>
-                            <option>Professional Skills (Legal, Media, etc.)</option>
-                        </select>
-                    </div>
-                    <button type="submit"
-                        class="w-full bg-brand-green text-white font-bold py-4 rounded-none hover:bg-green-800 transition shadow-lg">
-                        Sign Up
+                    <button @click="volunteerModalOpen = false" class="mt-8 text-[9px] font-black uppercase tracking-widest text-slate-400 hover:text-brand-red transition-colors">
+                        Close Window
                     </button>
-                </form>
+                </div>
             </div>
         </div>
 
         <!-- Footer -->
         <footer
-            class="bg-gradient-to-r from-brand-dark via-slate-900 to-brand-dark text-gray-400 py-16 border-t border-white/5">
+            class="bg-gradient-to-r from-brand-dark via-slate-900 to-brand-dark text-gray-400 py-12 border-t border-white/5">
             <div class="max-w-7xl mx-auto px-6">
                 <div
                     class="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 border-b border-white/5 pb-12">

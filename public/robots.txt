@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kimani-kang-u.vercel.app/sitemap.xml
