@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
@@ -10,7 +12,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // We are now using a Google Apps Script Webhook instead of Service Account Keys
     const webhookUrl = process.env.GOOGLE_SCRIPT_WEBHOOK_URL;
 
     if (!webhookUrl) {
@@ -19,23 +20,22 @@ export default async function handler(req, res) {
        return res.status(200).json({ success: true, message: 'Volunteer saved successfully (local mock)' });
     }
 
-    // Forward the data to the Google Apps Script Webhook
-    const response = await fetch(webhookUrl, {
-      method: 'POST',
+    // Forward the data to the Google Apps Script Webhook using Axios
+    // Axios safely handles the 302 redirects that Google Apps Script often uses
+    const response = await axios.post(webhookUrl, {
+      name,
+      phone,
+      role,
+      residence,
+      timestamp: new Date().toISOString()
+    }, {
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        phone,
-        role,
-        residence,
-        timestamp: new Date().toISOString()
-      }),
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`Google Script responded with status: ${response.status}`);
+    if (response.data && response.data.status === 'error') {
+      throw new Error(`Google Script returned error: ${response.data.message}`);
     }
 
     return res.status(200).json({ 
